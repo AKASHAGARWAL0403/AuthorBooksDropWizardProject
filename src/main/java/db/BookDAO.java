@@ -25,18 +25,37 @@ public class BookDAO extends AbstractDAO<Book> {
         super(sessionFactory);
     }
 
+    /**
+     * Add a new findAll functionality for Book
+     * @return List of all Book Objects
+     * */
     public List<Book> findAll() {
         return list((Query<Book>) namedQuery("core.Book.findAll"));
     }
 
+    /**
+     * Add a new create functionality for Book
+     * @return Book object
+     * */
     public Book create(Book book){
         return persist(book);
     }
 
+    /**
+     * Add a new findById functionality for Book
+     * @param id It for Book
+     * @return Optional Book object
+     * */
     public Optional<Book> findById(int id){
         return Optional.ofNullable(get(id));
     }
 
+    /**
+     * Add functionality of updating the authorSet for a Book
+     * @param book Book object which we want to update
+     * @param author Author object we want to add
+     * @return Book object
+     * */
     public Book addAuthor(Book book , Author author){
         Optional<Author> authorIfExist = Optional.ofNullable(
                 currentSession().get(Author.class , author.getId())
@@ -48,6 +67,12 @@ public class BookDAO extends AbstractDAO<Book> {
         return book;
     }
 
+    /**
+     * Add functionality to update the Book object
+     * @param previousBook Book we want to update
+     * @param updateBook updates we want in Book
+     * @return Optional updated Book object
+     * */
     public Optional<Book> updateBook(Book previousBook , BookRequest updateBook){
         if(updateBook.name != null)
             previousBook.setName(updateBook.name);

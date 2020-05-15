@@ -5,6 +5,11 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is the Entity class for the Genre
+ * It has all the fields needed for the Genre
+ * It also establishes the relationship needed With other Entity class
+ * */
 @Entity
 @Table(name = "genre")
 @NamedQueries({

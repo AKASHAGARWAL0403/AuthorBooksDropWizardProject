@@ -2,12 +2,18 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jdk.internal.jline.internal.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is the Entity class for the Author
+ * It has all the fields needed for the Author
+ * It also establishes the relationship needed With other Entity class
+ * */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
 @Table(name = "author")
@@ -32,20 +38,24 @@ public class Author {
     @NotNull
     private int age;
 
-    @Column(name = "address" , nullable = true)
+    @Column(name = "address")
+    @Nullable
     private String address;
 
-    @Column(name = "contact_no" , nullable = true)
+    @Column(name = "contact_no")
+    @Nullable
     private String contactNo;
 
-    @Column(name = "email" , nullable = true)
+    @Column(name = "email")
+    @Nullable
     private String email;
 
     @Column(name = "gender")
     @NotNull
     private Gender gender;
 
-    @Column(name = "books_published_count" , nullable = true)
+    @Column(name = "books_published_count")
+    @Nullable
     private int booksPublishedCount;
 
     @ManyToMany(mappedBy = "author" , fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)

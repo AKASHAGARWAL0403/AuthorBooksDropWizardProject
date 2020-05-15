@@ -5,6 +5,10 @@ import core.Book;
 import core.Genre;
 import jdk.internal.jline.internal.Nullable;
 
+/**
+ * This is a request class which is Used to take
+ * PUT request data for an Book Entity
+ * */
 public class BookRequest {
 
     @JsonProperty("name")

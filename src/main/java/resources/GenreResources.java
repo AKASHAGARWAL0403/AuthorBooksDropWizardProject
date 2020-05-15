@@ -10,6 +10,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * This is the Resource class for the Genre Entity.
+ * It handles various request call for Genre
+ * It handles findAll , createGenre functionality*/
 @Path("/genre")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,6 +24,10 @@ public class GenreResources {
         this.genreDAO = genreDAO;
     }
 
+    /**
+     * This is used to find a list of all Genre
+     * @return Response with the list of genre added to it
+     * */
     @GET
     @UnitOfWork
     public Response findAll(){
@@ -28,6 +36,10 @@ public class GenreResources {
                 .status(200).build();
     }
 
+    /**
+     * This is used to create a new Genre object
+     * @param genre This is the genre object we need to add
+     * @return Response with appropriate status*/
     @POST
     @UnitOfWork
     public Response createGenre(Genre genre){

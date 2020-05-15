@@ -18,10 +18,18 @@ public class GenreDAO extends AbstractDAO<Genre> {
         super(sessionFactory);
     }
 
+    /**
+     * Add a new findAll functionality for Genre
+     * @return List of all Genre Objects
+     * */
     public List<Genre> findAll(){
         return list((Query<Genre>)namedQuery("core.Genre.findAll"));
     }
 
+    /**
+     * Add a new create functionality for Genre
+     * @return Genre object
+     * */
     public Genre create(Genre genre){
         return persist(genre);
     }

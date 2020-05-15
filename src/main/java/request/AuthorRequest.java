@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import core.Gender;
 import jdk.internal.jline.internal.Nullable;
 
+/**
+ * This is a request class which is Used to take
+ * PUT request data for an Author Entity
+ * */
 public class AuthorRequest {
 
     @JsonProperty("firstName")

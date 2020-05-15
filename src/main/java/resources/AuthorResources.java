@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * This is the Resource class for the Author Entity.
+ * It handles various request call for Author
+ * It handles findAll , findById , create , update , addBook , findBooks functionality*/
 @Path("/authors")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -24,6 +28,10 @@ public class AuthorResources {
         this.authorDAO = authorDAO;
     }
 
+    /**
+     * This is used to find a list of all Author
+     * @return Response with the list of author added to it
+     * */
     @GET
     @UnitOfWork
     public Response findAll(){
@@ -32,6 +40,10 @@ public class AuthorResources {
                 .status(200).build();
     }
 
+    /**
+     * This is used to find Author based on id
+     * @param id This is the author id which we need to find
+     * @return Response with the appropriate status*/
     @Path("/{id}")
     @GET
     @UnitOfWork
@@ -45,6 +57,11 @@ public class AuthorResources {
         }
     }
 
+    /**
+     * This is used to update Author based on id
+     * @param id This is the author id we need to update
+     * @param updates This is the update we need to do
+     * @return Response with appropriate status*/
     @Path("/{id}")
     @PUT
     @UnitOfWork
@@ -65,6 +82,10 @@ public class AuthorResources {
         }
     }
 
+    /**
+     * This is used to create a new Author object
+     * @param author This is the author object we need to add
+     * @return Response with appropriate status*/
     @POST
     @UnitOfWork
     public Response createAuthor(Author author) {
@@ -73,6 +94,11 @@ public class AuthorResources {
                 .status(200).build();
     }
 
+    /**
+     * This is used to add a Book for the Author
+     * @param id This is id for Author for whom we need to add Book
+     * @param book This is the book we need to add
+     * @return Response with appropriate status*/
     @Path("/{id}/add-book")
     @POST
     @UnitOfWork
@@ -88,6 +114,10 @@ public class AuthorResources {
         }
     }
 
+    /**
+     * This is used to find the list of book for a Author
+     * @param id This is the id of Author for which we need to find Books
+     * @return Response with appropriate status*/
     @Path("/{id}/books")
     @GET
     @UnitOfWork

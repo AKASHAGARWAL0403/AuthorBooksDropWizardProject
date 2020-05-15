@@ -2,12 +2,18 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jdk.internal.jline.internal.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is the Entity class for the Book
+ * It has all the fields needed for the Book
+ * It also establishes the relationship needed With other Entity class
+ * */
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
 @Table(name = "books")
@@ -42,11 +48,13 @@ public class Book {
     private int edition;
 
     @OneToOne
-    @JoinColumn(name = "previous_part_id" , nullable = true)
+    @JoinColumn(name = "previous_part_id")
+    @Nullable
     private Book previousPart;
 
     @ManyToOne
-    @JoinColumn(name = "genre_id" , nullable = true)
+    @JoinColumn(name = "genre_id")
+    @Nullable
     private Genre genre;
 
     @ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)

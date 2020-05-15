@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class HelloWorldConfiguration extends Configuration{
+public class BookAuthorConfiguration extends Configuration{
     @NotEmpty
     private String template;
 

@@ -15,10 +15,10 @@ import resources.BookResources;
 import resources.GenreResources;
 import resources.HelloWorldResources;
 
-public class HelloWorldApplication extends Application<HelloWorldConfiguration>{
+public class BookAuthorApplication extends Application<BookAuthorConfiguration>{
 
-    private final HibernateBundle<HelloWorldConfiguration> hibernateBundle
-            = new HibernateBundle<HelloWorldConfiguration>(
+    private final HibernateBundle<BookAuthorConfiguration> hibernateBundle
+            = new HibernateBundle<BookAuthorConfiguration>(
             Author.class,
             Book.class,
             Genre.class
@@ -26,7 +26,7 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration>{
 
         @Override
         public DataSourceFactory getDataSourceFactory(
-                HelloWorldConfiguration configuration
+                BookAuthorConfiguration configuration
         ) {
             return configuration.getDataSourceFactory();
         }
@@ -34,19 +34,19 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration>{
     };
 
     public static void main(String args[]) throws Exception{
-        new HelloWorldApplication().run(args);
+        new BookAuthorApplication().run(args);
     }
 
     public String getName(){
         return "Hello-World";
     }
 
-    public void initialize(Bootstrap<HelloWorldConfiguration> bootstrap){
+    public void initialize(Bootstrap<BookAuthorConfiguration> bootstrap){
         bootstrap.addBundle(hibernateBundle);
     }
 
     @Override
-    public void run(HelloWorldConfiguration configuration, Environment environment) throws Exception {
+    public void run(BookAuthorConfiguration configuration, Environment environment) throws Exception {
         final AuthorDAO authorDAO
                 = new AuthorDAO(hibernateBundle.getSessionFactory());
 
