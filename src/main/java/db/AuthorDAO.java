@@ -2,6 +2,7 @@ package db;
 
 import core.Author;
 import core.Book;
+import core.Gender;
 import core.Genre;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.checkerframework.checker.units.qual.A;
@@ -99,7 +100,7 @@ public class AuthorDAO extends AbstractDAO<Author> {
             previousAuthor.setEmail(updateAuthor.email);
         }
         if(updateAuthor.gender != null){
-            previousAuthor.setGender(updateAuthor.gender);
+            previousAuthor.setGender(Gender.valueOf(updateAuthor.gender));
         }
         currentSession().update(previousAuthor);
         return Optional.ofNullable(previousAuthor);

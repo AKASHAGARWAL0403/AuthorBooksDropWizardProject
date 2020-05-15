@@ -4,12 +4,14 @@ import core.Author;
 import core.Book;
 import db.BookDAO;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.checkerframework.checker.nullness.Opt;
 import request.BookRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -65,8 +67,13 @@ public class BookResources {
     @PUT
     @UnitOfWork
     public Response updateBook(@PathParam("id") int id , BookRequest updates){
-        Optional<Book> previousBook = bookDAO.findById(id);
 
+        Map<String,String> validate = updates.validate();
+        if(validate.size() != 0)
+            return Response.accepted(validate)
+                    .status(422).build();
+
+        Optional<Book> previousBook = bookDAO.findById(id);
         if(!previousBook.isPresent())
             return Response.notModified("No such Book Exist")
                     .status(404).build();
@@ -83,13 +90,27 @@ public class BookResources {
 
     /**
      * This is used to create a new Book object
-     * @param book This is the book object we need to add
+     * @param bookRequest This is the book object we need to add
      * @return Response with appropriate status*/
     @POST
     @UnitOfWork
-    public Response createBook(Book book){
-        book = bookDAO.create(book);
-        return Response.accepted(book)
+    public Response createBook(BookRequest bookRequest){
+
+        Map<String,String> validate = bookRequest.validate();
+        if(validate.size() != 0)
+            return Response.accepted(validate)
+                    .status(422).build();
+
+        Optional<Book> book = bookRequest.build();
+        if(!book.isPresent())
+            return Response.accepted("Required Field not present")
+                    .status(422).build();
+
+        book = bookDAO.create(book.get());
+        if(!book.isPresent())
+            return Response.accepted("Previous Part not an Object")
+                    .status(422).build();
+        return Response.accepted(book.get())
                 .status(200).build();
     }
 

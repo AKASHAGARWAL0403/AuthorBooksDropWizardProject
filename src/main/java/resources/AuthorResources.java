@@ -11,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -66,8 +67,13 @@ public class AuthorResources {
     @PUT
     @UnitOfWork
     public Response updateAuthor(@PathParam("id") int id , AuthorRequest updates){
-        Optional<Author> previousAuthor = authorDAO.findById(id);
 
+        Map<String,String> validate = updates.validate();
+        if(validate.size() != 0)
+            return Response.accepted(validate)
+                    .status(422).build();
+
+        Optional<Author> previousAuthor = authorDAO.findById(id);
         if(!previousAuthor.isPresent())
             return Response.notModified("No such Author Exist")
                     .status(404).build();
@@ -84,13 +90,24 @@ public class AuthorResources {
 
     /**
      * This is used to create a new Author object
-     * @param author This is the author object we need to add
+     * @param authorRequest This is the author object we need to add
      * @return Response with appropriate status*/
     @POST
     @UnitOfWork
-    public Response createAuthor(Author author) {
-        author = authorDAO.create(author);
-        return Response.accepted(author)
+    public Response createAuthor(AuthorRequest authorRequest) {
+
+        Map<String,String> validate = authorRequest.validate();
+        if(validate.size() != 0)
+            return Response.accepted(validate)
+                    .status(422).build();
+
+        Optional<Author> author = authorRequest.build();
+        if(!author.isPresent())
+            return Response.accepted("Required field Not present")
+                    .status(422).build();
+
+        Author authorCreated = authorDAO.create(author.get());
+        return Response.accepted(authorCreated)
                 .status(200).build();
     }
 

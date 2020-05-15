@@ -35,10 +35,24 @@ public class BookDAO extends AbstractDAO<Book> {
 
     /**
      * Add a new create functionality for Book
-     * @return Book object
+     * @return OptionalBook object
      * */
-    public Book create(Book book){
-        return persist(book);
+    public Optional<Book> create(Book book){
+        if(book.getGenre() != null) {
+            Optional<Genre> genre = Optional.ofNullable(
+                    currentSession().get(Genre.class, book.getGenre().getId())
+            );
+            if (!genre.isPresent())
+                currentSession().save(book.getGenre());
+        }
+        if(book.getPreviousPart() != null) {
+            Optional<Book> previousBook = Optional.ofNullable(
+                    currentSession().get(Book.class, book.getPreviousPart().getId())
+            );
+            if (!previousBook.isPresent())
+                return Optional.empty();
+        }
+        return Optional.ofNullable(persist(book));
     }
 
     /**
