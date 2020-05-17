@@ -1,6 +1,8 @@
 package core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jdk.internal.jline.internal.Nullable;
 
@@ -14,7 +16,7 @@ import java.util.Set;
  * It has all the fields needed for the Book
  * It also establishes the relationship needed With other Entity class
  * */
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
 @Table(name = "books")
 @NamedQueries({
@@ -50,6 +52,7 @@ public class Book {
     @OneToOne
     @JoinColumn(name = "previous_part_id")
     @Nullable
+    @JsonIgnore
     private Book previousPart;
 
     @ManyToOne
@@ -65,6 +68,7 @@ public class Book {
             inverseJoinColumns = { @JoinColumn(name = "author_id",
                     referencedColumnName = "id" , nullable = false , updatable = false)}
     )
+    @JsonIgnoreProperties("books")
     private Set<Author> author = new HashSet<>();
 
     public int getId() {

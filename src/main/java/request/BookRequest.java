@@ -8,6 +8,7 @@ import jdk.internal.jline.internal.Nullable;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -102,6 +103,25 @@ public class BookRequest {
         book.setPreviousPart(previousPart);
         book.setGenre(genre);
         return Optional.ofNullable(book);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookRequest that = (BookRequest) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(dateOfPublish, that.dateOfPublish) &&
+                Objects.equals(pagesCount, that.pagesCount) &&
+                Objects.equals(part, that.part) &&
+                Objects.equals(edition, that.edition);
+//                Objects.equals(previousPart, that.previousPart) &&
+//                Objects.equals(genre, that.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, dateOfPublish, pagesCount, part, edition);
     }
 }
 

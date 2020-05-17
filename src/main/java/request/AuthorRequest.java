@@ -7,6 +7,7 @@ import jdk.internal.jline.internal.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -143,5 +144,26 @@ public class AuthorRequest {
         author.setBooksPublishedCount(booksPublishedCount);
         author.setAddress(address);
         return Optional.ofNullable(author);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthorRequest that = (AuthorRequest) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(age, that.age) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(contactNo, that.contactNo) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(gender, that.gender) &&
+                Objects.equals(booksPublishedCount, that.booksPublishedCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, age, address, contactNo, email, gender, booksPublishedCount);
     }
 }

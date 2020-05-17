@@ -1,0 +1,11 @@
+{
+  "name" : "Harry Potter",
+  "dateOfPublish" : "2012/02/21",
+  "pagesCount" : 200,
+  "edition" : 1,
+  "part" : 1,
+  "previousPart" : null,
+  "genre" : {
+    "name" : "Suspense"
+  }
+}

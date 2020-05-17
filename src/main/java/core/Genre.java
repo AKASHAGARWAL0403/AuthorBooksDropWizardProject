@@ -1,8 +1,11 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -26,6 +29,7 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre")
+    @JsonIgnore
     private Set<Book> booksSet = new HashSet<>();
 
     public int getId() {
@@ -52,4 +56,18 @@ public class Genre {
         this.booksSet = booksSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Genre genre = (Genre) o;
+        return id == genre.id &&
+                Objects.equals(name, genre.name) &&
+                Objects.equals(booksSet, genre.booksSet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, booksSet);
+    }
 }

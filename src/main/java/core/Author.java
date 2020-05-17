@@ -1,6 +1,7 @@
 package core;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jdk.internal.jline.internal.Nullable;
 
@@ -14,7 +15,7 @@ import java.util.Set;
  * It has all the fields needed for the Author
  * It also establishes the relationship needed With other Entity class
  * */
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
 @Table(name = "author")
 @NamedQueries({
@@ -59,6 +60,7 @@ public class Author {
     private int booksPublishedCount;
 
     @ManyToMany(mappedBy = "author" , fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties("author")
     private Set<Book> books = new HashSet<>();
 
     public int getId() {
